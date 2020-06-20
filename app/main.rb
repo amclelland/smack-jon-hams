@@ -7,6 +7,9 @@ def tick args
   args.state.left_frame ||= 1
   args.state.right_frame ||= 1
 
+  args.state.allan_position ||= -200
+  args.state.allan_angle ||= 0
+
   args.outputs.sprites << {
     x: 550,
     y: -150,
@@ -17,6 +20,15 @@ def tick args
     source_y: 0,
     source_w: 300,
     source_h: 800,
+  }
+
+  args.outputs.sprites << {
+    x: 550,
+    y: args.state.allan_position,
+    w: 140,
+    h: 200,
+    path: "sprites/allan.png",
+    angle: args.state.allan_angle
   }
 
   args.outputs.sprites << {
@@ -39,6 +51,10 @@ def tick args
     args.state.right_animate = true
   end
 
+  if args.inputs.keyboard.key_down.p
+    args.state.allan_position = 0
+  end
+
   if args.state.left_animate
     args.state.left_frame += 1
   end
@@ -53,6 +69,17 @@ def tick args
 
   if args.state.right_frame == 8
     args.outputs.sounds << "sounds/smack.wav"
+  end
+
+  if args.state.allan_position > 1000
+    args.state.allan_position = -200
+  elsif args.state.allan_position >= 0
+    args.state.allan_position += 2
+    args.state.allan_angle += 2
+
+    if args.state.allan_position == 420
+      args.outputs.sounds << "sounds/slurp.wav"
+    end
   end
 
   if args.state.left_animate && args.state.left_frame == 15
