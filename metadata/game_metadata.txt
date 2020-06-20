@@ -1,0 +1,5 @@
+devid=allan.mclelland
+devtitle=Allan McLelland
+gameid=smack-jons-hams
+gametitle=Smack Jon's Hams
+version=1.0
